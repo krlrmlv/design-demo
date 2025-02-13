@@ -1,0 +1,21 @@
+.root {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-height: 100dvh;
+}
+
+.content {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	flex: 1 0 auto;
+}
+
+.main {
+	position: relative;
+	flex-grow: 1;
+	margin-bottom: auto;
+	height: 100%;
+	overflow: hidden;
+}

@@ -1,0 +1,18 @@
+@use '@theme' as *;
+
+.root {
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  & > svg {
+    height: 24px;
+    width: 24px;
+  }
+}

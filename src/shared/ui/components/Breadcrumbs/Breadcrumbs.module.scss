@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '@theme' as *;
+
+.root {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 4px;
+  justify-content: flex-start;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb {
+  // font-family: var(--inter-font);
+  a {
+    @include typographyVariant(b3);
+  }
+}
+
+.separator {
+  color: getColor(darkWhite);
+  @include typographyVariant(b3);
+}

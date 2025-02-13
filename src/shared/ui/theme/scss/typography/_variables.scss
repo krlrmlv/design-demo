@@ -1,0 +1,102 @@
+@use 'sass:map';
+
+@use '../core' as *;
+
+$typhography: (
+	font-family: '"Inter", Arial, sans-serif',
+	font-weight: 400,
+	font-size: 16px,
+	letter-spacing: 'normal'
+);
+
+$spacingThemes: (
+	md: (
+		letter-spacing: 0em,
+	),
+	lg: (
+		letter-spacing: 0.2em,
+	),
+	xl: (
+		letter-spacing: 0.4em,
+	),
+);
+
+$familyThemes: (
+	sans-serif: (
+		font-family: '"Inter", Arial, sans-serif',
+	),
+	serif: (
+		font-family: 'Georgia, serif',
+	),
+);
+
+$fontWeights: (
+	regular: 400,
+	semiBold: 600,
+);
+
+$fontSizes: (
+	xs: 12px null null 12px,
+	sm: 12px null null 14px,
+	md: 14px null null 16px,
+	lg: 16px null null 18px,
+	xl: 16px null null 20px,
+	xxl: 20px null null 24px,
+	xxxl: 24px null null 28px,
+	xxxxl: 24px null null 40px,
+);
+
+$lineHeights: (
+	xxs: 110%,
+	xs: 120%,
+	md: 125%,
+	lg: 130%,
+	xl: 135%,
+	xxl: 140%,
+);
+
+$typographyVariants: (
+	h1: (
+		font-size: xxxxl,
+		font-weight: semiBold,
+		line-height: xxs,
+		//letter-spacing: calc(0.97 * cssVar('letter-spacing') - 0.03em),
+	),
+	h2: (
+		font-size: xxxl,
+		line-height: xs,
+		font-weight: semiBold,
+	),
+	h3: (
+		font-size: xxl,
+		line-height: md,
+		font-weight: semiBold,
+	),
+	h4: (
+		font-size: xl,
+		line-height: lg,
+		font-weight: semiBold,
+	),
+	b1: (
+		font-size: lg,
+		line-height: lg,
+		font-weight: regular,
+	),
+	b2: (
+		font-size: md,
+		line-height: xl,
+		font-weight: regular,
+	),
+	b3: (
+		font-size: sm,
+		line-height: xl,
+		font-weight: regular,
+	),
+	caption: (
+		font-size: xs,
+		line-height: xxl,
+		font-weight: regular,
+	),
+);
+
+$variantsNames: map.keys($typographyVariants);

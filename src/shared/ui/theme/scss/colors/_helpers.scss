@@ -1,0 +1,31 @@
+@use 'sass:list';
+@use 'sass:map';
+
+@use '../core' as *;
+@use './variables' as *;
+
+// Возвращает цвет
+@function getColor($color, $default: black) {
+	@if map.get($themeColors, $color) == null {
+		@return $default;
+	} @else {
+		@return map.get($themeColors, $color);
+	}
+}
+
+// добавляет классы по цветам
+@mixin colorize($property: background-color) {
+	@each $name, $color in $themeColors {
+		&.#{$name} {
+			#{$property}: $color;
+		}
+	}
+}
+
+// Создает css переменные со значениями цветов из глобального списка цветов
+@mixin cssColorVars($vars, $prefix: '') {
+	@each $name, $value in $vars {
+		//@error $value;
+		#{cssVarName('#{$prefix}#{$name}')}: #{getColor($value)};
+	}
+}

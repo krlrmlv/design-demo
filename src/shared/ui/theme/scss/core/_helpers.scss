@@ -1,0 +1,75 @@
+@use './variables' as *;
+
+// Возвращает селектор корневого элемента с доп параметрами
+@function rootSelector($addon: '') {
+	@return '#{$rootSelector}#{$addon}';
+}
+
+// Применяет стили к корневому элементу
+@mixin withTheme($addon: '') {
+	#{rootSelector($addon)} {
+		@content;
+	}
+}
+
+// Возвращает имя css переменной с префиксом
+@function cssVarName($name) {
+	@return #{$cssVarPrefix}#{$name};
+}
+
+// Возвращает значение css пременной (добавляя префикс к переменной)
+@function cssVar($name, $default: null) {
+	@if $default == null {
+		@return var(cssVarName($name));
+	} @else {
+		@return var(cssVarName($name), $default);
+	}
+}
+
+@function hexToRGBString($hexColor) {
+	@return '#{red($hexColor)},#{green($hexColor)},#{blue($hexColor)}';
+}
+
+// Принимает map-объект css переменных и объявляет их с учетом префиксов
+@mixin cssVars($vars, $prefix: '') {
+	@each $name, $value in $vars {
+		#{cssVarName('#{$prefix}#{$name}')}: #{$value};
+	}
+}
+
+// Создает css переменные для различных тем и разрешений
+@mixin cssVarsVariants($subject, $variants, $prefix: '') {
+	@each $variant, $vars in $variants {
+		//@error $variant $vars $variants;
+		@include withTheme('[data-css-#{$subject}=#{$variant}]') {
+			@include cssVars($vars);
+		}
+	}
+}
+
+// Получает map-объект css переменных без префиксов и объявляет их равными значениям таким же css пременным, но которые с префиксом
+@mixin cssVarsProps($props) {
+	@each $name in $props {
+		& {
+			#{$name}: #{cssVar($name)};
+		}
+	}
+}
+
+// Возвращает "абсолютный" url для assets
+@function assetUrl($url) {
+	@return url(#{$rootBaseUrl + '/assets/' + $url});
+}
+
+// Используется для назначения transition свойств
+@function trs($params...) {
+	$result: ();
+	$duration: 0.3s;
+	$func: ease-in-out;
+
+	@each $param in $params {
+		$result: append($result, $param $duration $func, comma);
+	}
+
+	@return $result;
+}

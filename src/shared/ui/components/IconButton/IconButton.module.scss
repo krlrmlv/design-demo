@@ -1,0 +1,202 @@
+@use 'sass:map';
+@use '@theme' as *;
+
+@mixin _renderColorsStates($states) {
+	@each $state, $props in $states {
+		@if $state == default {
+			@include cssColorVars($props, 'btn-');
+		} @else {
+			#{$state} {
+				@include cssColorVars($props, 'btn-');
+			}
+		}
+	}
+}
+
+$defaultButtonSize: lg;
+
+$buttonSizes: (
+	sm: (
+		width: 40px 40px 40px,
+		height: 40px 40px 40px
+	),
+	lg: (
+		width: 56px 56px 56px,
+		height: 56px 56px 56px
+	),
+);
+
+
+$buttonColors: (
+	primaryFilled: (
+		default: (
+			background: primary02,
+		),
+		'&:not(:disabled):hover': (
+			background: primary03,
+		),
+		'&:not(:disabled):active': (
+			background: primary03,
+		),
+		'&:disabled': (
+			background: almostWhite,
+			border-color: shadedWhite,
+		),
+	),
+	primaryOutlined: (
+		default: (
+			backround: white,
+			border-color: almostWhite,
+		),
+		'&:not(:disabled):hover': (
+			backround: almostWhite,
+			border-color: almostWhite,
+		),
+		'&:not(:disabled):active': (
+			backround: almostWhite,
+			border-color: almostWhite,
+		),
+		'&:disabled': (
+			backround: white,
+			border-color: almostWhite,
+		),
+	)
+);
+
+$defaultButtonSizeProps: map.get($buttonSizes, $defaultButtonSize);
+
+.root {
+	align-items: center;
+	background-color: cssVar('btn-background');
+	border: 1px cssVar('btn-border-color', cssVar('btn-background')) solid;
+	border-radius: 100%;
+	box-sizing: border-box;
+	color: cssVar('btn-text-color');
+	cursor: pointer;
+	display: inline-flex;
+	height: cssVar('btn-height');
+	justify-content: center;
+	text-align: center;
+	width: cssVar('btn-width');
+	
+	//line-height: 100%;
+	
+	@include arrayCssVars($defaultButtonSizeProps, 'btn-');
+	
+	> svg {
+		@include arrayProps(
+				(
+					width: 24px,
+					height: 24px
+				)
+		)
+	}
+	
+	&:disabled {
+		cursor: default; // not-allowed
+		svg {
+			path {
+				stroke: getColor(paleGrey);
+			}
+		}
+	}
+	
+	@each $size, $props in $buttonSizes {
+		&.#{$size} {
+			@include arrayCssVars($props, 'btn-');
+		}
+	}
+	
+	@each $color, $states in $buttonColors {
+		@if $color == default {
+			@include _renderColorsStates($states);
+		}
+		&.#{'' + $color} {
+			@include _renderColorsStates($states);
+		}
+	}
+	
+}
+
+.loader {
+	animation: loading 1s infinite linear alternate;
+	animation-delay: 0.5s;
+	background-color: getColor(primary03);
+	border-radius: 100%;
+	position: relative;
+	
+	&.lg {
+		height: 8px;
+		width: 8px;
+		
+		&::before {
+			animation: loading 1s infinite alternate;
+			animation-delay: 0s;
+			background-color: getColor(primary03);
+			border-radius: 100%;
+			content: '';
+			display: inline-block;
+			height: 8px;
+			left: -12px;
+			position: absolute;
+			top: 0;
+			width: 8px;
+		}
+		
+		&::after {
+			animation: loading 1s infinite alternate;
+			animation-delay: 1s;
+			background-color: getColor(primary03);
+			border-radius: 100%;
+			content: '';
+			display: inline-block;
+			height: 8px;
+			left: 12px;
+			position: absolute;
+			top: 0;
+			width: 8px;
+		}
+	}
+	
+	&.sm {
+		height: 6px;
+		width: 6px;
+		
+		&::before {
+			animation: loading 1s infinite alternate;
+			animation-delay: 0s;
+			background-color: getColor(primary03);
+			border-radius: 100%;
+			content: '';
+			display: inline-block;
+			height: 6px;
+			left: -10px;
+			position: absolute;
+			top: 0;
+			width: 6px;
+		}
+		
+		&::after {
+			animation: loading 1s infinite alternate;
+			animation-delay: 1s;
+			background-color: getColor(primary03);
+			border-radius: 100%;
+			content: '';
+			display: inline-block;
+			height: 6px;
+			left: 10px;
+			position: absolute;
+			top: 0;
+			width: 6px;
+		}
+	}
+}
+
+@keyframes loading {
+	0% {
+		background-color: getColor(primary03);
+	}
+	50%, 100% {
+		background-color: getColor(primary05)
+	}
+}

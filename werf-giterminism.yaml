@@ -1,0 +1,13 @@
+giterminismConfigVersion: 1 
+config:
+  allowUncommitted: true
+  goTemplateRendering:
+    allowEnvVariables:
+      - SSH_KEY
+      - LIB_TOKEN
+      - CI_JOB_TOKEN
+    allowUncommittedFiles:
+      - .env
+      - coverage
+helm:
+  allowUncommittedFiles: ['*']

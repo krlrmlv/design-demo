@@ -1,0 +1,152 @@
+@use 'sass:map';
+
+@use '../core' as *;
+@use '../media' as *;
+@use './variables' as *;
+
+//// Проверяет есть ли в map-объекте $spacingThemes элемент $theme
+//@function assertSpacingTheme($theme) {
+//	@if map.has-key($spacingThemes, $theme) {
+//		@return true;
+//	} @else {
+//		@error 'Unknown spacing theme "#{$theme}".';
+//	}
+//}
+//
+//// Возвращает селектор корневого элемента с темой межсловных интервалов
+//@function spacingThemeSelector($theme, $mod: null) {
+//	@if assertSpacingTheme($theme) {
+//		$res: '[data-css-spacing=#{$theme}]';
+//		@if $mod != null {
+//			$res: ':#{$mod}(#{$res})';
+//		}
+//		@return rootSelector($res);
+//	}
+//}
+//
+//// Применяет стили к селектору корневого элемента с темой межсловных интервалов
+//@mixin withSpacingTheme($theme, $mod: null) {
+//	#{spacingThemeSelector($theme, $mod)} & {
+//		@content;
+//	}
+//}
+//
+//// Проверяет есть ли в map-объекте $familyThemes элемент $theme
+//@function assertFamilyTheme($theme) {
+//	@if map.has-key($familyThemes, $theme) {
+//		@return true;
+//	} @else {
+//		@error 'Unknown family theme "#{$theme}".';
+//	}
+//}
+//
+//// Возвращает селектор корневого элемента с темой шрифта
+//@function familyThemeSelector($theme, $mod: null) {
+//	@if assertFamilyTheme($theme) {
+//		$res: '[data-css-family=#{$theme}]';
+//		@if $mod != null {
+//			$res: ':#{$mod}(#{$res})';
+//		}
+//		@return rootSelector($res);
+//	}
+//}
+//
+//// Применяет стили к селектору корневого элемента с темой шрифта
+//@mixin withFamilyTheme($theme, $addon: null) {
+//	#{familyThemeSelector($theme, $addon)} & {
+//		@content;
+//	}
+//}
+
+// Возвращает значение размера шрифта $name в соответствии с темой и адаптивом
+@function getFontSize($name, $default: $name) {
+	@if map.has-key($fontSizes, $name) {
+		@return cssVar('font-size-#{$name}');
+	} @else {
+		@return $default;
+	}
+}
+
+// Устанавливает размер шрифта в соответствии с $name
+@mixin fontSize($name) {
+	& {
+		font-size: getFontSize($name);
+	}
+}
+
+// Возвращает значение жирности шрифта $name в соответствии с темой и адаптивом
+@function getFontWeight($name, $default: $name) {
+	@if map.has-key($fontWeights, $name) {
+		@return cssVar('font-weight-#{$name}');
+	} @else {
+		@return $default;
+	}
+}
+
+// Устанавливает жирность шрифта в соответствии с $name
+@mixin fontWeight($name) {
+	& {
+		font-weight: getFontWeight($name);
+	}
+}
+
+// Возвращает значение высоты строки шрифта $name в соответствии с темой и адаптивом
+@function getLineHeight($name, $default: $name) {
+	@if map.has-key($lineHeights, $name) {
+		@return cssVar('line-height-#{$name}');
+	} @else {
+		@return $default;
+	}
+}
+
+// Устанавливает высоту шрифта в соответствии с $name
+@mixin lineHeight($name) {
+	& {
+		line-height: getLineHeight($name);
+	}
+}
+
+// Устанавливает font-weight | font-size | line-height в зависимости от $name равное значение $value
+@mixin _renderProp($name, $value) {
+	@if $name == font-weight {
+		@include fontWeight($value);
+	} @else if $name == font-size {
+		@include fontSize($value);
+	} @else if $name == line-height {
+		@include lineHeight($value);
+	} @else {
+		#{$name}: #{$value};
+	}
+}
+
+// Устанавливаются стили $name из $variants
+@mixin typographyVariant($name) {
+	@if map.has-key($typographyVariants, $name) {
+		$props: map.get($typographyVariants, $name);
+		@each $key, $val in $props {
+			@include _renderProp($key, $val);
+		}
+	} @else {
+		@error 'Unknown typography variant #{$name}';
+	}
+}
+
+//@function isTypographyProp($name) {
+//	@if $name == font-weight or $name == font-size {
+//		@return true;
+//	} @else {
+//		@return false;
+//	}
+//}
+
+//@mixin renderProp($name, $value, $asIs: false) {
+//	@if isTypographyProp($name) {
+//		@if $name == typography {
+//			@include typographyVariant($value);
+//		} @else {
+//			@include _renderProp($name, $value);
+//		}
+//	} @else if $asIs {
+//		#{$name}: #{$value};
+//	}
+//}

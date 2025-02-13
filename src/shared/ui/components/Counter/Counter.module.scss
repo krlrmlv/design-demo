@@ -1,0 +1,127 @@
+@use 'sass:map';
+@use '@theme' as *;
+
+.root {
+	align-items: center;
+	border: 1px getColor(shadedWhite) solid;
+	box-sizing: border-box;
+	display: inline-flex;
+	justify-content: space-between;
+	text-align: center;
+
+	@include arrayProps(
+		(
+			width: auto 400px,
+			height: 48px 56px,
+			padding: 12px '15px 16px',
+			border-radius: 4px 8px,
+			color: getColor(black) getColor(primary02)
+		)
+	);
+
+	svg {
+		&:hover {
+			path {
+				stroke: getColor(secondary02);
+			}
+		}
+	}
+
+	&.disabled {
+		background-color: getColor(almostWhite);
+		color: getColor(paleGrey);
+		cursor: default !important; // not-allowed
+		svg {
+			cursor: default !important; // not-allowed
+			path {
+				stroke: getColor(paleGrey);
+			}
+		}
+	}
+
+	.count {
+		@include typographyVariant(h4);
+		@include arrayProps(
+			(
+				min-width: 20px auto
+			)
+		);
+
+		& {
+			display: inline-flex;
+			align-items: center;
+			text-align: center;
+			justify-content: center;
+		}
+
+		.label {
+			margin-left: 4.5px;
+			@include arrayProps(
+				(
+					display: none block
+				)
+			);
+		}
+	}
+}
+
+.loader {
+	animation: loading 1s infinite linear alternate;
+	animation-delay: 0.5s;
+	background-color: getColor(primary03);
+	border-radius: 100%;
+	position: relative;
+
+	@include arrayProps(
+		(
+			width: 4px 8px,
+			height: 4px 8px
+		)
+	);
+
+	&::before {
+		animation: loading 1s infinite alternate;
+		animation-delay: 0s;
+		background-color: getColor(primary03);
+		border-radius: 100%;
+		content: '';
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		@include arrayProps(
+			(
+				width: 4px 8px,
+				height: 4px 8px,
+				left: -8px -16px
+			)
+		);
+	}
+
+	&::after {
+		animation: loading 1s infinite alternate;
+		animation-delay: 1s;
+		background-color: getColor(primary03);
+		border-radius: 100%;
+		content: '';
+		display: inline-block;
+		position: absolute;
+		top: 0;
+		@include arrayProps(
+			(
+				width: 4px 8px,
+				height: 4px 8px,
+				left: 8px 16px
+			)
+		);
+	}
+}
+
+@keyframes loading {
+	0% {
+		background-color: getColor(primary03);
+	}
+	50%,
+	100% {
+		background-color: getColor(primary05);
+	}
+}

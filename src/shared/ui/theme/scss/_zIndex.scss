@@ -1,0 +1,11 @@
+$minNegativeLift: -1;
+$minLift: 1;
+$arrowsSlider: 2;
+$header: calc(var(--css-header-z-index, 10) + 1);
+$modalOverlay: calc(var(--css-header-z-index, 10) + 2);
+$modalContent: calc(var(--css-header-z-index, 10) + 3);
+$popover: 10;
+$shareLift: 10;
+$banner: 10;
+$storiesPagination: var(--css-header-z-index, 10);
+$negative: -1;

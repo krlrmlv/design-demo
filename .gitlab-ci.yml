@@ -1,0 +1,10 @@
+include:
+  - project: 'aero/cicd'
+    file: 'gitlab/variables.yml'
+  - project: 'aero/cicd'
+    file: 'frontend-next/stages/stages.yml'
+  - project: 'aero/cicd'
+    file: 'frontend-next/stages/tests.yml'
+  - project: 'aero/cicd'
+    file: 'frontend-next/stages/build.yml'
+

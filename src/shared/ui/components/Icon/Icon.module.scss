@@ -1,0 +1,50 @@
+@use '@theme' as *;
+
+.iconContainer {
+	height: 24px;
+	width: 24px;
+
+	&.default {
+		height: 24px;
+		width: 24px;
+	}
+
+	&.small {
+		height: 16px;
+		width: 16px;
+	}
+
+	&.large {
+		height: 32px;
+		width: 32px;
+	}
+
+	&.disabled {
+		&:hover {
+			path {
+				stroke: getColor(paleGrey);
+			}
+		}
+	}
+}
+
+.icon {
+	height: 100%;
+	width: 100%;
+
+	@each $name, $color in $themeColors {
+		&.#{'' + $name} {
+			path {
+				stroke: $color;
+			}
+		}
+	}
+	@each $name, $color in $themeColors {
+		&.#{'' + $name}fill {
+			path {
+				stroke: $color;
+				fill: $color;
+			}
+		}
+	}
+}

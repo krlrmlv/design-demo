@@ -1,0 +1,23 @@
+@use '@theme' as *;
+
+.root {
+	display: flex;
+	align-items: center;
+	padding-top: 4px;
+
+	@include typographyVariant(caption);
+
+	& {
+		color: getColor(error02);
+	}
+
+	svg {
+		flex-shrink: 0;
+		width: 8px;
+		height: 8px;
+	}
+}
+
+.text {
+	padding-left: 4px;
+}

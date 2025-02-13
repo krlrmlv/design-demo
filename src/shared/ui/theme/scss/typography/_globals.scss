@@ -1,0 +1,22 @@
+@use 'sass:map';
+
+@use '../core' as *;
+@use '../media' as *;
+@use './variables' as *;
+@use './helpers' as *;
+
+#{rootSelector()} {
+	// Объявляются дефолтные переменные
+	@include cssVars($typhography);
+	// Объявляются переменные жирности шрифтов
+	@include cssVars($fontWeights, 'font-weight-');
+	// Объявляются переменные размера шрифтов с учетом адаптива
+	@include arrayCssVars($fontSizes, 'font-size-');
+	// Объявляются переменные размера шрифтов с учетом адаптива
+	@include arrayCssVars($lineHeights, 'line-height-');
+	// Объявляются дефолтные переменные (без префиксов)
+	@include cssVarsProps(map.keys($typhography));
+}
+
+@include cssVarsVariants('spacing', $spacingThemes, '&');
+@include cssVarsVariants('family', $familyThemes, '&');

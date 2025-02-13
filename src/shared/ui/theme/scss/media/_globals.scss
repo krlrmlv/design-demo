@@ -1,0 +1,14 @@
+@use '../core' as *;
+@use './helpers' as *;
+@use './variables' as *;
+
+@forward './variables';
+
+// Создаются css переменные со значениями $breakpoints
+:root {
+	@each $name, $value in $breakpoints {
+		@include mediaUp($name) {
+			#{cssVarName('media-min')}: #{$value};
+		}
+	}
+}

@@ -1,0 +1,140 @@
+@use 'sass:map';
+@use 'sass:list';
+
+@use '../core' as *;
+@use './variables' as *;
+
+// Проверяет есть ли в map-объекте $breakpoints элемент $name
+@function assertBreakpoint($name) {
+	@if map.has-key($breakpoints, $name) {
+		@return true;
+	} @else {
+		@error 'Unknown breakpoint "#{$name}".';
+	}
+}
+
+// Возвращает следующий брейкпоинт (+1) из map-объекта $breakpoints
+// Если следующего брейкпоинта нет, возвращает null
+@function breakpointNext($name) {
+	@if assertBreakpoint($name) {
+		$breakpointNames: map.keys($breakpoints);
+		$n: list.index($breakpointNames, $name);
+		@return if(
+			$n != null and $n < list.length($breakpointNames),
+			list.nth($breakpointNames, $n + 1),
+			null
+		);
+	}
+}
+
+// Возвращает значение из map-объекта $breakpoints по ключу $name
+@function breakpointMin($name) {
+	@if assertBreakpoint($name) {
+		@return map.get($breakpoints, $name);
+	}
+}
+
+// Возвращает значение из map-объекта $breakpoints по ключу $next
+@function breakpointMax($name) {
+	$next: breakpointNext($name);
+	@return breakpointMin($next);
+}
+
+// Применяет стили ко всем разрешениям экрана, которые больше, чем значение по ключу $name из map-объекта $breakpoints
+@mixin mediaUp($name) {
+	@if assertBreakpoint($name) {
+		$names: map.keys($breakpoints);
+		@if (list.index($names, $name) == 1) {
+			// самый маленький брейкопинт - безусловно (всё что меньше - так же)
+			@content;
+		} @else {
+			@media (min-width: breakpointMin($name)) {
+				@content;
+			}
+		}
+	}
+}
+
+// Применяет стили ко всем разрешениям экрана, кторые меньше, чем значение по ключу $name из map-объекта $breakpoints
+@mixin mediaDown($name) {
+	// Отнимается 1px, чтобы не было конфликтов со свойствами @media min-width
+	@media (max-width: calc(breakpointMax($name) - 1px)) {
+		@content;
+	}
+}
+
+// Получает на вход название $breakpoint и список css-свойств $vals (свойства для различных разрешений экрана)
+// $breakpoint имеет определенный $index в списке $breakpointsNames
+// Возвращает значение из списка $vals по индексу $index
+@function arrayPropSlice($breakpoint, $vals) {
+	$index: list.index($breakpointsNames, $breakpoint);
+	@if $index != null and $index <= list.length($vals) {
+		$val: list.nth($vals, $index);
+		@if $val != null {
+			@return $val;
+		}
+	}
+	@return null;
+}
+
+// Возвращаем актуальное не-null значение из массива $vals для заданного $breakpoint
+@function arrayPropVal($breakpoint, $vals) {
+	$res: null;
+	$index: list.index($breakpointsNames, $breakpoint);
+	@for $i from 1 through $index {
+		$val: list.nth($vals, $i);
+		@if $val != null {
+			$res: $val;
+		}
+	}
+	@return $res;
+}
+
+// Принимает $breakpoint (название) и map-объект css стилей
+// Возвращает новый map-объект, где ключ - имя css свойства, а значение - значение этого css свойства для $breakpoint
+@function arrayPropsSlice($breakpoint, $props) {
+	$res: ();
+	@each $name, $vals in $props {
+		$val: arrayPropSlice($breakpoint, $vals);
+		@if $val != null {
+			$res: map.set($res, $name, $val);
+		}
+	}
+	@return $res;
+}
+
+// Принимает map-объект css стилей со значениями для различных breakpoints
+// Возвращает итоговые css стили с адаптивом
+@mixin arrayProps($props) {
+	@each $bp in $breakpointsNames {
+		$res: arrayPropsSlice($bp, $props);
+		@if list.length(map.keys($res)) > 0 {
+			@include mediaUp($bp) {
+				@each $name, $val in $res {
+					& {
+						#{$name}: #{$val};
+					}
+				}
+			}
+		}
+	}
+}
+
+// Принимает map-объект css стилей со значениями для различных breakpoints и $prefix, который будет добавляться к имени переменной
+// Возваращает css стили с созданными переменными и адаптивом
+@mixin arrayCssVars($props, $prefix: '') {
+	@each $bp in $breakpointsNames {
+		@include mediaUp($bp) {
+			@each $name, $vals in $props {
+				@if $name != typography {
+					$val: arrayPropSlice($bp, $vals);
+					@if $val != null {
+						& {
+							#{cssVarName('#{$prefix}#{$name}')}: #{$val};
+						}
+					}
+				}
+			}
+		}
+	}
+}

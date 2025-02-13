@@ -1,0 +1,42 @@
+{
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@theme/*": ["./src/shared/ui/theme/*"],
+			"@theme": ["./src/shared/ui/theme/scss"],
+			"@scss-lib/*": ["./src/shared/scss-lib/*"]
+		},
+		"target": "es6",
+		"lib": ["DOM", "ES6", "DOM.Iterable", "ScriptHost"],
+		"allowJs": true,
+		"alwaysStrict": true,
+		"skipLibCheck": true,
+		"strictNullChecks": true,
+		"strictFunctionTypes": true,
+		"strictPropertyInitialization": true,
+		"allowSyntheticDefaultImports": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "esnext",
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"noUnusedLocals": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"jsx": "preserve",
+		"esModuleInterop": true,
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		]
+	},
+	"exclude": ["node_modules", "mock"],
+	"include": ["**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/shared/config/webpack/webpack.js"],
+	"files": ["src/shared/config/declarations/svgr.d.ts"]
+}

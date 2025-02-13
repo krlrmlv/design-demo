@@ -1,0 +1,6 @@
+@use './helpers' as *;
+
+[data-css='root'] {
+	#{cssVarName(content-indent-top)}: 0px; // используется для задания верхнего отступа для основного контента сайта
+	#{cssVarName(header-z-index)}: 10;
+}

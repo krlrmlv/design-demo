@@ -1,0 +1,117 @@
+@use '@theme' as *;
+
+.mobile {
+	@include arrayProps(
+		(
+			display: block none
+		)
+	);
+}
+
+.desktop {
+	@include arrayProps(
+		(
+			display: none block
+		)
+	);
+}
+
+.root {
+	@include arrayProps(
+		(
+			width: auto 144rem
+		)
+	);
+}
+
+.hero {
+	position: relative;
+
+	@include arrayProps(
+		(
+			width: 39.3rem 144rem,
+			height: 39.2rem 81rem
+		)
+	);
+}
+
+.firstSection {
+	display: flex;
+
+	@include arrayProps(
+		(
+			margin: '10rem 2rem' '10rem 1.6rem',
+			flex-direction: column row,
+			gap: 3.2rem 2rem
+		)
+	);
+
+	.left {
+		border-radius: 4rem;
+		position: relative;
+
+		@include arrayProps(
+			(
+				height: 36.1rem 69rem,
+				width: 36.1rem 69rem
+			)
+		);
+	}
+}
+
+.right {
+	display: flex;
+	flex-direction: column;
+	gap: 5.4rem;
+
+	.blackBox {
+		width: 69rem;
+		height: 33.4rem;
+		border-radius: 4rem;
+		background-color: black;
+	}
+
+	.infoBlock {
+		display: flex;
+
+		@include arrayProps(
+			(
+				flex-direction: column row,
+				gap: 3.2rem 7.9rem
+			)
+		);
+	}
+
+	.textBlock {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+
+		@include arrayProps(
+			(
+				gap: 3.2rem 1.6rem,
+				width: 36.1rem 33.5rem,
+				height: 20.5rem 24rem,
+				margin-left: 0 5.9rem
+			)
+		);
+	}
+
+	.widget {
+		position: relative;
+		width: 100%;
+
+		@include arrayProps(
+			(
+				width: 17.2rem 15.8rem,
+				height: 17.2rem 15.8rem,
+				margin-top: 0 8.2rem
+			)
+		);
+	}
+
+	.widgetWrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+}

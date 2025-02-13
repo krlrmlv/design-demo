@@ -1,0 +1,25 @@
+@use '../core' as *;
+@use '../media' as *;
+@use './variables' as *;
+@use './helpers' as *;
+
+// стили для вариантов (классы .h1 итд)
+@include withTheme() {
+	@each $variantName in $variantsNames {
+		$selector: '.#{$variantName}';
+		#{$selector} {
+			@include typographyVariant($variantName);
+		}
+	}
+}
+
+@include withTheme() {
+	.tfn {
+		@include mediaUp(xl) {
+			@each $name, $vals in $fontSizes {
+				$val: arrayPropVal(lg, $vals);
+				#{cssVarName('font-size-#{$name}')}: #{$val};
+			}
+		}
+	}
+}

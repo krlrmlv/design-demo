@@ -1,0 +1,194 @@
+@use 'sass:map';
+@use '@theme' as *;
+
+@mixin _renderColorsStates($states) {
+	@each $state, $props in $states {
+		@if $state == default {
+			@include cssColorVars($props, 'btn-');
+		} @else {
+			#{$state} {
+				@include cssColorVars($props, 'btn-');
+			}
+		}
+	}
+}
+
+$defaultButtonSize: lg;
+
+$buttonSizes: (
+	sm: (
+		height: 32px 32px 32px,
+		border-radius: 4px,
+		py: 6px,
+		px: 12px,
+		//padding: '6px 12px',
+		typography: b3,
+	),
+	md: (
+		height: 48px 48px 48px,
+		border-radius: 6px,
+		py: 14px,
+		px: 24px,
+		//padding: '14px 24px',
+		typography: b2,
+	),
+	lg: (
+		height: 56px null 56px,
+		border-radius: 8px,
+		py: 18px,
+		px: 32px,
+		//padding: '18px 32px',
+		typography: h4,
+	),
+);
+
+
+$buttonColors: (
+	primaryFilled: (
+		default: (
+			background: primary02,
+			text-color: white,
+		),
+		'&:not(:disabled):hover': (
+			background: primary03,
+			text-color: white,
+		),
+		'&:not(:disabled):active': (
+			background: primary03,
+			text-color: white,
+			//border-color: black,
+		),
+		'&:disabled': (
+			background: almostWhite,
+			text-color: paleGrey,
+			border-color: shadedWhite,
+		),
+	),
+	primaryOutlined: (
+		default: (
+			backround: transparent,
+			text-color: primary02,
+			border-color: shadedWhite,
+		),
+		'&:not(:disabled):hover': (
+			backround: primary02,
+			text-color: primary02,
+			border-color: primary02,
+		),
+		'&:not(:disabled):active': (
+			backround: primary01,
+			text-color: primary02,
+		),
+		'&:disabled': (
+			backround: transparent,
+			text-color: paleGrey,
+			border-color: shadedWhite,
+		),
+	)
+);
+
+$defaultButtonSizeProps: map.get($buttonSizes, $defaultButtonSize);
+
+.root {
+	align-items: center;
+	background-color: cssVar('btn-background');
+	border: 1px cssVar('btn-border-color', cssVar('btn-background')) solid;
+	border-radius: 8px;
+	box-sizing: border-box;
+	color: cssVar('btn-text-color');
+	cursor: pointer;
+	display: inline-flex;
+	height: cssVar('btn-height');
+	justify-content: center;
+	padding: cssVar('btn-py') cssVar('btn-px');
+	text-align: center;
+	
+	//line-height: 100%;
+	
+	@include arrayCssVars($defaultButtonSizeProps, 'btn-');
+	
+	> svg {
+		@include arrayProps(
+				(
+					width: 20px 24px null,
+					height: 20px 24px null
+				)
+		)
+	}
+	
+	&:disabled {
+		cursor: default; // not-allowed
+		svg {
+			path {
+				stroke: getColor(paleGrey);
+			}
+		}
+	}
+	
+	@include typographyVariant(map.get($defaultButtonSizeProps, typography));
+	
+	@each $size, $props in $buttonSizes {
+		&.#{$size} {
+			@include arrayCssVars($props, 'btn-');
+			@include typographyVariant(map.get($props, typography));
+			//line-height: 100%;
+		}
+	}
+	
+	@each $color, $states in $buttonColors {
+		@if $color == default {
+			@include _renderColorsStates($states);
+		}
+		&.#{'' + $color} {
+			@include _renderColorsStates($states);
+		}
+	}
+	
+}
+
+.loader {
+	animation: loading 1s infinite linear alternate;
+	animation-delay: 0.5s;
+	background-color: getColor(primary03);
+	border-radius: 5px;
+	height: 10px;
+	position: relative;
+	width: 10px;
+	
+	&::before {
+		animation: loading 1s infinite alternate;
+		animation-delay: 0s;
+		background-color: getColor(primary03);
+		border-radius: 5px;
+		content: '';
+		display: inline-block;
+		height: 10px;
+		left: -15px;
+		position: absolute;
+		top: 0;
+		width: 10px;
+	}
+	
+	&::after {
+		animation: loading 1s infinite alternate;
+		animation-delay: 1s;
+		background-color: getColor(primary03);
+		border-radius: 5px;
+		content: '';
+		display: inline-block;
+		height: 10px;
+		left: 15px;
+		position: absolute;
+		top: 0;
+		width: 10px;
+	}
+}
+
+@keyframes loading {
+	0% {
+		background-color: getColor(primary03);
+	}
+	50%, 100% {
+		background-color: getColor(primary05);
+	}
+}

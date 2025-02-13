@@ -1,0 +1,69 @@
+project: platform-starter-kit
+configVersion: 1
+deploy:
+  helmRelease: "[[ project ]]"
+  namespace: "[[ project ]]-[[ env ]]"
+---
+image: build
+from: registry.gitlab.aeroidea.ru/farmperspektiva/images/nodejs:latest
+git:
+- add: /
+  to: /var/www
+  excludePaths:
+  - ".docker*"
+  - "docker*"
+  - "Docker*"
+  - "Makefile"
+  - "coverage"
+  - ".helm*/"
+  - ".env"
+  - "**/.gitlab-ci.yml"
+  - "**/werf*"
+  - "**/.gitignore"
+  stageDependencies:
+    install:
+    - package.json
+    - yarn.lock
+    setup:
+    - "**/*"
+docker:
+  ENV:
+    TZ: Europe/Moscow
+  WORKDIR: /var/www
+shell:
+  beforeInstall:
+  - apk update && apk upgrade && apk add --no-cache git gcc make g++ autoconf libgcc linux-headers automake libtool nasm build-base zlib-dev rsync
+  install:
+  - cd /var/www
+  - rm -rf .next
+  - yarn install --frozen-lockfile
+  setup:
+  - cd /var/www
+  - yarn build --no-lint
+---
+from: registry.gitlab.aeroidea.ru/farmperspektiva/images/nodejs:latest
+image: app
+docker:
+  WORKDIR: /var/www
+  CMD: ["yarn", "start"]
+import:
+- image: build
+  add: /var/www
+  includePaths:
+  - node_modules
+  - .next
+  before: install
+git:
+- add: /
+  to: /var/www
+  excludePaths:
+  - ".docker*"
+  - "docker*"
+  - "Docker*"
+  - "Makefile"
+  - "coverage"
+  - ".helm*/"
+  - ".env"
+  - "**/.gitlab-ci.yml"
+  - "**/werf*"
+  - "**/.gitignore"

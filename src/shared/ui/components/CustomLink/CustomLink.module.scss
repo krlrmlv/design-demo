@@ -1,0 +1,19 @@
+@use '@theme' as *;
+
+.link {
+	@include typographyVariant(b2);
+
+	& {
+		color: getColor(primary02);
+	}
+
+	&:hover {
+		color: getColor(primary03);
+		text-decoration: underline;
+	}
+
+	&.disabled {
+		color: getColor(black);
+		pointer-events: none;
+	}
+}

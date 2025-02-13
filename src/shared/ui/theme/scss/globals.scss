@@ -1,0 +1,95 @@
+//@forward './fonts';
+//@forward './colors';
+//@forward './typography';
+//@forward './swiper';
+//@forward './mixins';
+@forward './reset.scss';
+@forward './core/globals';
+@forward './colors/globals';
+@forward './media/globals';
+@forward './typography/globals';
+@forward './select';
+
+@forward '~normalize.css/normalize';
+
+@use './media/variables';
+@forward './media/variables';
+
+// @forward '~react-toastify/scss/main';
+@forward '@/shared/ui/components/Notify/notify';
+//@forward '~react-perfect-scrollbar/dist/css/styles';
+
+@use '@theme' as *;
+
+* {
+	box-sizing: inherit;
+}
+
+html,
+body {
+	margin: 0;
+}
+
+html {
+	position: relative;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	-ms-overflow-style: scrollbar;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+	position: relative;
+	display: block;
+}
+
+#__next {
+	height: 100%;
+}
+
+.js-focus-visible :focus:not(.focus-visible) {
+	outline: none;
+}
+
+@include withTheme() {
+	background-color: getColor(white);
+	color: getColor(black);
+}
+
+a {
+	text-decoration: none;
+}
+
+button {
+	letter-spacing: inherit;
+	border: none;
+	padding: 0;
+	background: transparent;
+	appearance: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+	margin: 0;
+}
+
+html {
+	font-size: calc(100vw / 1440 * 10);
+}
+
+@media (max-width: 768px) {
+	html {
+		font-size: calc(100vw / 393 * 10);
+	}
+}
+
+// @media (min-width: 1440px) {
+// 	html {
+// 		font-size: calc(1440px / 1464 * 10);
+// 	}
+// }

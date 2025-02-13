@@ -1,0 +1,108 @@
+@use '@theme' as *;
+
+:root {
+  --toastify-toast-width: 335px;
+
+  --toastify-color-progress-light: #DADADA;
+}
+
+/** Classes for the displayed toast **/
+.Toastify__toast {
+  padding: 16px;
+  border-radius: 0;
+  backdrop-filter: blur(25px);
+}
+
+.Toastify__toast-body {
+  padding: 0;
+  margin: 0;
+  align-items: flex-start;
+}
+
+.Toastify__toast-icon {
+  margin-inline-end: 12px;
+  width: 28px;
+  height: 28px;
+
+  @include mediaDown(md) {
+    width: 24px;
+    height: 24px;
+  }
+
+  & > svg {
+    width: 28px;
+    height: 28px;
+
+    @include mediaDown(md) {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+/** handle the notification color and the text color based on the theme **/
+
+.Toastify__toast--success {
+  color: getColor(white);
+  background: getColor(success02);
+}
+
+.Toastify__toast--warning {
+  color: getColor(black);
+  background: getColor(alert02);
+
+  .Toastify__toast-icon {
+    fill: getColor(black);
+    & > svg {
+      stroke: getColor(black);
+    }
+  }
+  * > svg {
+    stroke: getColor(greyShaded);
+  }
+}
+
+.Toastify__toast--error {
+  color: getColor(white);
+  background: getColor(error02);
+}
+
+.Toastify__toast--info {
+  color: getColor(white);
+  background: getColor(primary02);
+}
+
+.Toastify__toast--default {
+  color: getColor(black);
+  background: getColor(almostWhite);
+
+  .Toastify__toast-icon {
+    fill: getColor(black);
+    & > svg {
+      stroke: getColor(black);
+    }
+  }
+  * > svg {
+    stroke: getColor(greyShaded);
+  }
+}
+
+// handle the notification progress bar color
+
+.Toastify__progress-bar--success {
+  background-color: getColor(whiteDark);
+}
+
+.Toastify__progress-bar--warning {
+  background-color: getColor(greyShaded);
+}
+
+.Toastify__progress-bar--error {
+  background-color: getColor(whiteDark);
+}
+
+.Toastify__progress-bar--info {
+  background-color: getColor(whiteDark);
+}
+
+

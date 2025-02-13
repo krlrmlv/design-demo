@@ -1,0 +1,69 @@
+@use '@theme' as *;
+
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+
+  background: getColor(white);
+  border-radius: 34px;
+  cursor: pointer;
+
+  border: 2px solid getColor(almostWhite);
+
+  &.primary {
+    background: getColor(primary02);
+    color: getColor(white);
+  }
+
+  &.secondary {
+    background: getColor(almostWhite);
+    border: none;
+  }
+
+  &:hover {
+    color: getColor(primary02);
+    &.primary {
+      color: getColor(white);
+      border: 2px solid getColor(white);
+    }
+    &.secondary {
+      border: none;
+    }
+  }
+
+  &:active {
+    border: 2px solid getColor(primary02);
+    &.primary {
+      background: getColor(white);
+      color: getColor(primary02);
+      border: none;
+    }
+    &.secondary {
+      background: getColor(primary02);
+      color: getColor(white);
+      border: none;
+    }
+  }
+
+  &:disabled {
+    border: 1px solid getColor(almostWhite);
+    color: getColor(almostWhite);
+    &.primary {
+      border: 1px solid getColor(primary02);
+      color: getColor(greyTinted);
+    }
+    &.secondary {
+      background: getColor(almostWhite);
+      color: getColor(greyTinted);
+      border: none;
+    }
+  }
+  &:focus {
+    border: 2px solid getColor(black);
+  }
+}
+
+.title {
+  @include typographyVariant(b2);
+}

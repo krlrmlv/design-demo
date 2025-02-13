@@ -1,0 +1,118 @@
+@use '@theme' as *;
+
+.mobile {
+	@include arrayProps(
+		(
+			display: block block none
+		)
+	);
+}
+
+.desktop {
+	@include arrayProps(
+		(
+			display: none none block
+		)
+	);
+}
+
+.root {
+	margin: 0 auto;
+	@include arrayProps(
+		(
+			width: 393px 393px 1440px
+		)
+	);
+}
+
+.hero {
+	position: relative;
+
+	@include arrayProps(
+		(
+			width: 392px 392px 1440px,
+			height: 392px 392px 810px
+		)
+	);
+}
+
+.firstSection {
+	display: flex;
+
+	@include arrayProps(
+		(
+			margin: '100px 20px' '100px 20px' '100px 16px',
+			flex-direction: column column row,
+			gap: 32px 32px 20px
+		)
+	);
+
+	.left {
+		border-radius: 40px;
+		position: relative;
+
+		@include arrayProps(
+			(
+				height: 361px 361px 690px,
+				width: 361px 361px 690px
+			)
+		);
+	}
+}
+
+.right {
+	display: flex;
+	flex-direction: column;
+	gap: 54px;
+
+	.blackBox {
+		width: 690px;
+		height: 334px;
+		border-radius: 40px;
+		background-color: black;
+	}
+
+	.infoBlock {
+		display: flex;
+
+		@include arrayProps(
+			(
+				flex-direction: column column row,
+				gap: 32px 32px 79px
+			)
+		);
+	}
+
+	.textBlock {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+
+		@include arrayProps(
+			(
+				gap: 32px 32px 16px,
+				width: 361px 361px 335px,
+				height: 205px 205px 240px,
+				margin-left: 0 0 59px
+			)
+		);
+	}
+
+	.widget {
+		position: relative;
+		width: 100%;
+
+		@include arrayProps(
+			(
+				width: 172px 172px 158px,
+				height: 172px 172px 158px,
+				margin-top: 0 0 82px
+			)
+		);
+	}
+
+	.widgetWrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+}

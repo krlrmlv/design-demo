@@ -1,0 +1,21 @@
+@use '@theme' as *;
+
+.root {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.textWrapper {
+}
+
+.text {
+	background-image: assetUrl('images/example.jpg');
+	@include typographyVariant(h1);
+	@include fontSize(xxxxl);
+	@include arrayProps(
+		(
+			color: getColor(error01) getColor(alert05) getColor(primary03) getColor(success01)
+		)
+	);
+}

@@ -1,0 +1,15 @@
+@use '@theme' as *;
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
+
+.header {
+	@include typographyVariant(h4);
+}
+
+.description {
+	@include typographyVariant(b2);
+}
